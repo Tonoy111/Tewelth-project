@@ -1,0 +1,55 @@
+<form onsubmit="movetoStorage(event)">
+    <label>Name</label>
+    <input type="text" id="id" name="details" required>
+      <label>Email</label>
+      <input type="email" id="email" name="eaddres" required>
+      <button>click</button>
+
+
+</form>
+
+<ul id="listofItems"></ul>
+
+
+
+<script>
+
+function movetoStorage(event){
+
+event.preventDefault()
+
+const name = event.target.details.value
+const email = event.target.eaddres.value
+const obj = {
+    name,
+    email
+}
+
+localStorage.getItem(obj.email,JSON.stringify(obj))
+
+showUserOnScreen(obj)
+
+}
+
+function showUserOnScreen(obj){
+const parentEle = document.getElementById('listofItems')
+const childEle = document.createElement('li')
+
+childEle.textContent = obj.name + '-' + obj.email
+
+const deleteButtn = document.createElement('input')
+deleteButtn.type = 'button'
+deleteButtn.value = 'Delete'
+ 
+deleteButtn.onclick=()=>{
+
+    localStorage.removeItem(obj.email)
+    parentEle.removeChild(childEle)
+}
+childEle.appendChild(deleteButtn)
+parentEle.appendChild(childEle)
+
+}
+
+
+</script>
